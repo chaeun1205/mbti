@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>MBTI 궁합 테스트</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f2ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+    h2 {
+      text-align: center;
+    }
+    label, select, button {
+      width: 100%;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>💘 MBTI 궁합 테스트</h2>
+    <label for="mbti1">MBTI 1:</label>
+    <select id="mbti1"><option value="">선택</option></select>
+
+    <label for="mbti2">MBTI 2:</label>
+    <select id="mbti2"><option value="">선택</option></select>
+
+    <button onclick="checkCompatibility()">궁합 보기</button>
+    <p id="result"></p>
+  </div>
+
+  <script>
+    const mbtiTypes = [
+      "INFP", "ENFP", "INFJ", "ENFJ",
+      "INTJ", "ENTJ", "INTP", "ENTP",
+      "ISFP", "ESFP", "ISTP", "ESTP",
+      "ISFJ", "ESFJ", "ISTJ", "ESTJ"
+    ];
+
+    const descriptions = {
+      "red":    "❌ 진짜 궁합 최악! 지구 멸망의 길",
+      "yellow": "🤷 안맞는 것 맞는 것 딱 반반",
+      "green":  "✅ 아주 좋은 관계가 될 수 있음!",
+      "blue":   "💙 우리 인연 영원히 뽀에버! 천생연분"
+    };
+
+    const matrix = [
+      ["green","green","blue","green","blue","green","green","green","red","red","green","green","red","red","green","green"],
+      ["green","green","blue","green","blue","green","green","green","red","red","green","green","red","red","green","green"],
+      ["blue","blue","green","blue","green","blue","green","green","green","green","green","green","green","green","green","green"],
+      ["green","green","blue","green","green","green","green","green","green","green","green","green","green","green","green","green"],
+      ["blue","blue","green","green","green","blue","blue","green","green","green","green","green","green","green","green","green"],
+      ["green","green","blue","green","blue","green","blue","green","green","green","green","green","green","green","green","blue"],
+      ["green","green","green","green","blue","blue","green","green","green","green","green","green","green","green","green","green"],
+      ["green","green","green","green","green","green","green","green","green","green","green","green","green","green","green","green"],
+      ["red","red","green","green","green","green","green","green","green","yellow","green","green","yellow","yellow","green","green"],
+      ["red","red","green","green","green","green","green","green","yellow","yellow","green","green","yellow","yellow","green","green"],
+      ["green","green","green","green","green","green","green","green","green","green","green","green","green","green","green","green"],
+      ["green","green","green","green","green","green","green","green","green","green","green","green","green","green","green","green"],
+      ["red","red","green","green","green","green","green","green","yellow","yellow","green","green","green","blue","green","green"],
+      ["red","red","green","green","green","green","green","green","yellow","yellow","green","green","blue","green","green","green"],
+      ["green","green","green","green","green","green","green","green","green","green","green","green","green","green","green","blue"],
+      ["green","green","green","green","green","blue","green","green","green","green","green","green","green","green","blue","green"]
+    ];
+
+    const select1 = document.getElementById('mbti1');
+    const select2 = document.getElementById('mbti2');
+
+    mbtiTypes.forEach(type => {
+      const option1 = document.createElement('option');
+      option1.value = option1.text = type;
+      select1.appendChild(option1);
+
+      const option2 = document.createElement('option');
+      option2.value = option2.text = type;
+      select2.appendChild(option2);
+    });
+
+    function checkCompatibility() {
+      const m1 = select1.value;
+      const m2 = select2.value;
+      const resultEl = document.getElementById("result");
+
+      if (!m1 || !m2) {
+        resultEl.textContent = "⚠️ MBTI를 두 개 모두 선택해주세요.";
+        return;
+      }
+
+      const i = mbtiTypes.indexOf(m1);
+      const j = mbtiTypes.indexOf(m2);
+      const result = matrix[i][j];
+      resultEl.textContent = `[${m1}] ❤️ [${m2}] → ${descriptions[result]}`;
+    }
+  </script>
+</body>
+</html>
